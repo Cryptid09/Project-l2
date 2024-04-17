@@ -20,7 +20,7 @@ export default function Home() {
         fill
         style={{ objectFit: "fill" }} 
         src='/Ci.png'  
-        alt="ci image"/>
+        alt="ci image"/>      
       </div>
     </div>
     </>
