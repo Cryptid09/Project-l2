@@ -9,7 +9,7 @@ const Cases = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+        const res = await fetch("http://localhost:3000/api/cases", {next:{revalidate:3600}});
         if (!res.ok) {
           throw new Error('Something went wrong');
         }

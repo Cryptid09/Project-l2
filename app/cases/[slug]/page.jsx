@@ -1,15 +1,28 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import PostUser from "@/components/postU";
+import { Suspense } from "react";
+import { getPost } from "@/lib/data";
+export const generateMetadata = async ({ params }) => {
+  const { slug } = params;
 
+  const post = await getPost(slug);
+
+  return {
+    title: post.title,
+    description: post.desc,
+  };
+};
 const SinglePost = ({ params }) => {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState(null);
+  
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+        const res = await fetch('http://localhost:3000/api/cases/${slug}');
         if (!res.ok) {
           throw new Error('Something went wrong');
         }
