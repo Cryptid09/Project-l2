@@ -18,7 +18,7 @@ const CaseSlot =  ({post}) => {
       {/* bottom */}
       <div className='w-40 truncate'>
         <h1 >{post.title}</h1>
-        <p className='text-xs text-gray-500'>{post.body}</p>
+        <p className='text-xs text-gray-500'>{post.desc}</p>
         <Link href={`/cases/${post.id}`} className='hover:underline'>Read More   </Link>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import React from 'react'
 
 const 
-PostU = () => {
+PostUser = () => {
   return (
     <div>
         PostU
@@ -10,4 +10,4 @@ PostU = () => {
 }
 
 export default 
-PostU
+PostUser

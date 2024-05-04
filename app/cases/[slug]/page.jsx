@@ -1,19 +1,14 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import PostUser from "@/components/postU";
+import PostUser from '@/app/components/postU';
 import { Suspense } from "react";
 import { getPost } from "@/lib/data";
-export const generateMetadata = async ({ params }) => {
-  const { slug } = params;
+
 
   const post = await getPost(slug);
 
-  return {
-    title: post.title,
-    description: post.desc,
-  };
-};
+
 const SinglePost = ({ params }) => {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState(null);
@@ -49,7 +44,7 @@ const SinglePost = ({ params }) => {
   return (
     <div className='flex flex-col-reverse md:flex-row gap-7 bg-[#d4d4d0]'>
       <div className='place-content-end md:relative md:content-start'>
-        <Image src="/Ci.png" width={500} height={500} />
+        <Image src={post.img} width={500} height={500} />
       </div>
       <div>
         <h1 className='mb-2 text-3xl text-center text-black'></h1>
@@ -67,7 +62,7 @@ const SinglePost = ({ params }) => {
           </div>
         </div>
         <div className='mt-7'>
-         {post.body}
+         {post.desc}
         </div>
       </div>
     </div>
