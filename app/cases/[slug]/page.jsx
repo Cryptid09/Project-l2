@@ -1,64 +1,62 @@
-'use client'
+'use client';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import PostUser from '@/app/components/postU';
-import { Suspense } from "react";
-import { getPost } from "@/lib/data";
 
-
-  const post = await getPost(slug);
-
-
-const SinglePost = ({ params }) => {
-  const [posts, setPosts] = useState([]);
-  const [error, setError] = useState(null);
+  const SinglePost = ({ params }) => {
+    const [post, setPost] = useState(null);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
   
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch('http://localhost:3000/api/cases/${slug}');
-        if (!res.ok) {
-          throw new Error('Something went wrong');
+    useEffect(() => {
+      const fetchData = async () => {
+        setLoading(true);
+        try {
+          const res = await fetch(`http://localhost:3000/api/cases/${params.slug}`);
+          if (!res.ok) {
+            throw new Error('This post could not be loaded at the moment. Please try again later.');
+          }
+          const data = await res.json();
+          setPost(data);
+        } catch (error) {
+          setError(error.message);
+        } finally {
+          setLoading(false);
         }
-        const data = await res.json();
-        setPosts(data);
-      } catch (error) {
-        setError(error.message);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
+      };
   
-  const post = posts.find(p => p.id === parseInt(params.slug));;
-
-  if (!post) {
-    return <div>Post not found</div>;
-  }
+      fetchData();
+    }, [params.slug]);
+  
+    if (loading) {
+      return <div>Loading...</div>;
+    }
+  
+    if (error) {
+      return <div>Error: {error}</div>;
+    }
+  
+    if (!post) {
+      return <div>Post not found</div>;
+    }
+  
   return (
     <div className='flex flex-col-reverse md:flex-row gap-7 bg-[#d4d4d0]'>
       <div className='place-content-end md:relative md:content-start'>
-        <Image src={post.img} width={500} height={500} />
+        <Image src={post.img} alt={post.title} width={500} height={500} />
       </div>
       <div>
-        <h1 className='mb-2 text-3xl text-center text-black'></h1>
+        <h1 className='mb-2 text-3xl text-center text-black'>{post.title}</h1>
         <div className='flex gap-7 items-center'>
-          <Image src='/coolboy.png' width={50} height={50} className='rounded-full' />
+          <Image src='/coolboy.png' alt='Author' width={50} height={50} className='rounded-full' />
 
           <div>
             <div>Author</div>
-            <span className='text-xs'>Akshat</span>
+            <span className='text-xs'>{post.author}</span>
           </div>
 
           <div >
-            <div>Phublished</div>
-            <span className='text-xs'>01.01.2024</span>
+            <div>Published</div>
+            <span className='text-xs'>{post.date}</span>
           </div>
         </div>
         <div className='mt-7'>
@@ -66,6 +64,8 @@ const SinglePost = ({ params }) => {
         </div>
       </div>
     </div>
-  )
-}
-export default SinglePost 
+  );
+};
+
+export default SinglePost;
+

@@ -28,4 +28,4 @@ export const DELETE = async (request, { params }) => {
     console.log(err);
     throw new Error("Failed to delete post!");
   }
-};
+};  

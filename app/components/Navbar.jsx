@@ -40,30 +40,31 @@ const Navbar = () => {
             </li>
 
             {/* Authentication */}
-            {session ? (
+            {session?.user ? (
               <>
-                {isAdmin && (
+                {session.user?.isAdmin && (
                   <li >
                     <Link className={`py-1  px-2 ${pathName === '/admin' && 'border-b-2 border-amber-400'}`} href="/admin">Admin</Link>
                   </li>
                 )}
+                <form action={handleLogout}>
                 <li className='py-2'>
-                  <button href="#_" className="relative items center justify-start inline-block px-2 py-1 overflow-hidden font-bold rounded-full group">
+                  <button className="relative items center justify-start inline-block px-2 py-1 overflow-hidden font-bold rounded-full group">
                     <span className="w-32 h-32 rotate-45 translate-x-12 -translate-y-2 absolute left-0 top-0 bg-white opacity-[3%]"></span>
                     <span className="absolute top-0 left-0 w-48 h-48 -mt-1 transition-all duration-500 ease-in-out rotate-45 -translate-x-56 -translate-y-24 bg-white opacity-100 group-hover:-translate-x-8"></span>
                     <span className="relative w-full text-left text-white transition-colors duration-200 ease-in-out group-hover:text-gray-900">Logout</span>
                     <span className="absolute inset-0 border-2 border-white rounded-full"></span>
                   </button>
-                </li>
+                </li></form>
               </>
             ) : (
-              <li className={`py-2 ${pathName === '/login'}`}>
-                <button href="#_" className="relative items-center justify-start inline-block px-2 py-1 overflow-hidden font-bold rounded-full group">
+              <li className={`pt-2 ${pathName === '/login'}`}>
+                <Link href="/login" className="relative items-center justify-start inline-block px-2 py-1 overflow-hidden font-bold rounded-full group">
                   <span className="w-32 h-32 rotate-45 translate-x-12 -translate-y-2 absolute left-0 top-0 bg-white opacity-[3%]"></span>
                   <span className="absolute top-0 left-0 w-48 h-48 -mt-1 transition-all duration-500 ease-in-out rotate-45 -translate-x-56 -translate-y-24 bg-white opacity-100 group-hover:-translate-x-8"></span>
-                  <span className="relative w-full text-left text-white transition-colors duration-200 ease-in-out group-hover:text-amber-400">Login</span>
+                  <span className="relative w-full text-left text-white transition-colors duration-200 ease-in-out group-hover:text-black">Login</span>
                   <span className="absolute inset-0 border-2 border-white rounded-full"></span>
-                </button>
+                </Link>
               </li>
             )}
           </ul>

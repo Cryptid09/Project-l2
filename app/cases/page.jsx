@@ -29,7 +29,7 @@ const Cases = () => {
   }
 
   return (
-    <div className='flex flex-wrap gap-9 bg-[#393936] p-16'>
+    <div className='min-h-screen flex flex-wrap gap-9 bg-[#393936] p-16'>
       {posts.map((post) => (
 
         <div key={post.id}>
