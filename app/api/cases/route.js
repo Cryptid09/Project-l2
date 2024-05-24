@@ -12,4 +12,4 @@ export const GET = async (request) => {
     console.log(err);
     throw new Error("Failed to fetch posts!");
   }
-};
+};        

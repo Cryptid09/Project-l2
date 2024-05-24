@@ -4,7 +4,7 @@ import AdminPosts from "../components/adminPost";
 import AdminPostForm from "../components/adminPostForm";
 import AdminUsers from "../components/adminUsers";
 import AdminUserForm from "../components/adminUserForm";
-import auth from "@/lib/auth";
+import {auth} from "@/lib/auth";
 
 const AdminPage = () => {
   const [session, setSession] = useState(null);
