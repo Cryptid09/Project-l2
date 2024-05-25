@@ -10,7 +10,7 @@ export default function LoginPage() {
   useEffect(() => {
     const fetchCsrfToken = async () => {
       try {
-        const response = await fetch('api/auth/csrf-token');
+        const response = await fetch('/api/auth/csrf-token');
         const data = await response.json();
         setCsrfToken(data.csrfToken);
       } catch (error) {
