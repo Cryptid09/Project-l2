@@ -1,10 +1,9 @@
-"use client";
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 
-const LoginForm = () => {
+const LoginForm = ({ csrfToken }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -15,14 +14,15 @@ const LoginForm = () => {
       redirect: false,
       username,
       password,
+      csrfToken, 
     });
 
     if (!result.ok) {
       setError(result.error);
     } else {
-      // Redirect or handle successful login
+      
       console.log("Login successful:", result);
-      window.location.href = "/dashboard"; // Or any route you want to redirect to
+      window.location.href = "/"; 
     }
   };
 
@@ -30,6 +30,7 @@ const LoginForm = () => {
     <div className="min-h-screen bg-[#393636] grid w-screen place-items-center">
       <div>
         <form onSubmit={handleLogin} className="pt-20">
+          <input type="hidden" name="csrfToken" value={csrfToken} />
           <div className="grid text-white font-mono gap-y-5">
             <div className="grid">
               <label>Enter your username</label>
@@ -74,3 +75,4 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
+

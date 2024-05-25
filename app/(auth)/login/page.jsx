@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useState, useEffect } from 'react';
 import LoginForm from '@/app/components/loginForm';
 
@@ -23,7 +23,7 @@ export default function LoginPage() {
   }, []);
 
   return (
-    <div className='min-h-screen flex flex-wrap gap-9 bg-[#d4d4d0] p-16'>
+    <div className="min-h-screen flex flex-wrap gap-9 bg-[#393636] p-16">
       {loading ? (
         <div>Loading...</div>
       ) : error ? (
