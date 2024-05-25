@@ -1,27 +1,24 @@
 'use client'
-import { Suspense, useEffect, useState } from "react";
+import { Suspense } from "react";
 import AdminPosts from "../components/adminPost";
 import AdminPostForm from "../components/adminPostForm";
 import AdminUsers from "../components/adminUsers";
 import AdminUserForm from "../components/adminUserForm";
-import {auth} from "@/lib/auth";
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 const AdminPage = () => {
-  const [session, setSession] = useState(null);
+  const { data: session, status } = useSession();
+  const router = useRouter();
 
-  useEffect(() => {
-    const fetchSession = async () => {
-      const result = await auth();
-      if (result?.user) {
-        setSession(result);
-      }
-    };
-
-    fetchSession();
-  }, []);
+ 
+  if (status === 'loading') {
+    return <div>Loading session...</div>;
+  }
 
   if (!session) {
-    return <div>Loading session...</div>;
+    router.push('/auth/login'); 
+    return null;
   }
 
   return (
