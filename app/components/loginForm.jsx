@@ -17,12 +17,12 @@ const LoginForm = ({ csrfToken }) => {
       csrfToken, 
     });
 
-    if (!result.ok) {
+    if (!result.ok) { 
       setError(result.error);
     } else {
       
       console.log("Login successful:", result);
-      window.location.href = "/"; 
+      window.location.href = "/admin"; 
     }
   };
 

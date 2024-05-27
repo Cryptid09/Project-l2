@@ -1,16 +1,14 @@
-'use client'
+'use client';
 import React from 'react';
 import WebAssetOffIcon from '@mui/icons-material/WebAssetOff';
 
-const Notf = () => {
-  
+const NotFound = () => {
   return (
     <div className='flex place-content-center text-xl gap-2'>
-    <WebAssetOffIcon className='text-2xl'/>
-    <div>Page not Found</div>
+      <WebAssetOffIcon className='text-2xl'/>
+      <div>Page not found</div>
     </div>
-    
-  )
+  );
 }
 
-export default Notf
+export default NotFound;

@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import LoginForm from '@/app/components/loginForm';
+import Loading from '@/app/loading';
 
 export default function LoginPage() {
   const [csrfToken, setCsrfToken] = useState('');
@@ -22,15 +23,12 @@ export default function LoginPage() {
     fetchCsrfToken();
   }, []);
 
+  if (loading) return <Loading />;
+  if (error) return <div>Error: {error}</div>;
+
   return (
     <div className="min-h-screen flex flex-wrap gap-9 bg-[#393636] p-16">
-      {loading ? (
-        <div>Loading...</div>
-      ) : error ? (
-        <div>Error: {error}</div>
-      ) : (
-        <LoginForm csrfToken={csrfToken} />
-      )}
+      <LoginForm csrfToken={csrfToken} />
     </div>
   );
 }

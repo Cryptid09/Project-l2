@@ -1,47 +1,44 @@
-'use client'
-import { Suspense } from "react";
+
+'use client';
+import React, { Suspense, useEffect } from "react";
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation'; 
 import AdminPosts from "../components/adminPost";
 import AdminPostForm from "../components/adminPostForm";
 import AdminUsers from "../components/adminUsers";
 import AdminUserForm from "../components/adminUserForm";
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
+import Loading from "../loading";
 
 const AdminPage = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
 
- 
-  if (status === 'loading') {
-    return <div>Loading session...</div>;
-  }
+  useEffect(() => {
+    if (status === 'authenticated' && !session?.user?.isAdmin) {
+      router.push('/');
+    }
+  }, [session, status, router]);
 
+  if (status === 'loading') return <Loading />;
   if (!session) {
-    router.push('/auth/login'); 
+    router.push('/auth/login');
     return null;
   }
+  if (!session.user.isAdmin) return null;
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-[#393936] py-8 grid place-items-center">
       <div>
-        <div>
-          <Suspense fallback={<div>Loading...</div>}>
-            <AdminPosts />
-          </Suspense>
-        </div>
-        <div>
-          <AdminPostForm userId={session.user.id} />
-        </div>
+        <Suspense fallback={<Loading />}>
+          <AdminPosts />
+        </Suspense>
+        <AdminPostForm userId={session.user.id} />
       </div>
-      <div>
-        <div>
-          <Suspense fallback={<div>Loading...</div>}>
-            <AdminUsers />
-          </Suspense>
-        </div>
-        <div>
-          <AdminUserForm />
-        </div>
+      <div>  
+        <Suspense fallback={<Loading />}>
+          <AdminUsers />
+        </Suspense>
+        <AdminUserForm />
       </div>
     </div>
   );

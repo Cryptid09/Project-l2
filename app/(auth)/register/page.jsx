@@ -1,6 +1,6 @@
 'use client'
+import React, { useState } from 'react';
 import RegisterForm from "@/app/components/registerForm";
-import { useState } from 'react';
 
 export default function RegisterPage() {
   const [username, setUsername] = useState('');
@@ -27,7 +27,10 @@ export default function RegisterPage() {
 
     if (res.ok) {
       setSuccess('User created successfully');
-      
+      setUsername('');
+      setEmail('');
+      setPassword('');
+      setPasswordRepeat('');
     } else {
       const data = await res.json();
       setError(data.message || 'Registration failed');
@@ -36,7 +39,19 @@ export default function RegisterPage() {
 
   return (
     <div>
-       <RegisterForm/>
+      <RegisterForm
+        username={username}
+        setUsername={setUsername}
+        email={email}
+        setEmail={setEmail}
+        password={password}
+        setPassword={setPassword}
+        passwordRepeat={passwordRepeat}
+        setPasswordRepeat={setPasswordRepeat}
+        handleSubmit={handleSubmit}
+      />
+      {error && <div className="error">{error}</div>}
+      {success && <div className="success">{success}</div>}
     </div>
   );
 }
