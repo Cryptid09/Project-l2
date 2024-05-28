@@ -6,13 +6,15 @@ export const GET = async (request, { params }) => {
   const { slug } = params;
 
   try {
-    connectToDb();
-
+    await connectToDb();
     const post = await Post.findOne({ slug });
+    if (!post) {
+      return NextResponse.json({ message: "Post not found" }, { status: 404 });
+    }
     return NextResponse.json(post);
   } catch (err) {
-    console.log(err);
-    throw new Error("Failed to fetch post!");
+    console.error(err);
+    return NextResponse.json({ error: "Failed to fetch post!" }, { status: 500 });
   }
 };
 
@@ -20,12 +22,11 @@ export const DELETE = async (request, { params }) => {
   const { slug } = params;
 
   try {
-    connectToDb();
-
+    await connectToDb();
     await Post.deleteOne({ slug });
-    return NextResponse.json("Post deleted");
+    return NextResponse.json({ message: "Post deleted" });
   } catch (err) {
-    console.log(err);
-    throw new Error("Failed to delete post!");
+    console.error(err);
+    return NextResponse.json({ error: "Failed to delete post!" }, { status: 500 });
   }
-};  
+};
