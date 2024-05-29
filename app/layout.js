@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="w-screen overflow-x-hidden">
-       <Providers> <Navbar /></Providers>
+       <Providers> <Navbar className=''/></Providers>
         <Providers>{children}</Providers> 
         <Footer />
       </body>
